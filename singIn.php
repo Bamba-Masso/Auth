@@ -1,8 +1,22 @@
-<?php
+<?php 
+ session_start();
 include('users.php');
 //  $email=$_POST['email'];
- $sing=new User();
-var_dump($sing->singIn());
+
+ if(!empty($_POST['email']) && !empty($_POST['password'])){
+  $email=$_POST['email'];
+  $password=$_POST['password'];
+   $sing=new User();
+  if($sing->singIn($email,$password)){
+    if($_SESSION['id_role']==3){
+      header('LOCATION:pageUser.php');
+    }elseif($_SESSION['id_role']== 1 || $_SESSION['id_role']==2){
+      header('LOCATION:admin.php');
+ }else{
+  $alert='Mot de passe ou email invalide';
+ }
+}
+ }
 ?>
 
 <!DOCTYPE html>
@@ -26,7 +40,11 @@ var_dump($sing->singIn());
   </div>
   <div class="md:w-2/3 mx-auto w-full pb-16 sm:max-w-screen-sm md:max-w-screen-md lg:w-1/3 lg:max-w-screen-lg xl:max-w-screen-xl">
     <form class="shadow-lg rounded-lg border border-gray-100 py-10 px-8" method="post">
-      
+    <?php 
+         if(!empty($alert)){
+         echo"<p class='mt-2 text-xs text-rose-600 text-center'> $alert</p>"; } 
+                
+        ?> 
       <div class="mb-4">
             <label class="mb-2 block text-sm font-bold" for="email">E-mail</label>
             <input name="email" class="shadow-sm w-full rounded border border-gray-300 py-2 px-3 leading-tight outline-none ring-blue-500 focus:ring" id="email" type="email" />
@@ -34,9 +52,9 @@ var_dump($sing->singIn());
            
      </div>
      <div class="mb-4">
-            <label class="mb-2 block text-sm font-bold" for="phone">Password</label>
-            <input name="password"class="shadow-sm w-full cursor-text appearance-none rounded border border-gray-300 py-2 px-3 leading-tight outline-none ring-blue-500 focus:ring" id="phone" type="password"/>
-            <!-- <span class="my-2 block"></span> -->
+        <label class="mb-2 block text-sm font-bold" for="phone">Password</label>
+        <input name="password"class="shadow-sm w-full cursor-text appearance-none rounded border border-gray-300 py-2 px-3 leading-tight outline-none ring-blue-500 focus:ring" id="phone" type="password"/>
+        <!-- <span class="my-2 block"></span> -->
             
      </div>
      

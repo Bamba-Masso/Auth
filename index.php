@@ -40,6 +40,7 @@ if(!isset($errorName) && !isset($errorEmail) && !isset($errorPassword) && !isset
         $valid=$user->register($username,$email,$password);
         if($valid){
             $valid='user enregister';
+            header('LOCATION:singIn.php');
         }
      }
 
@@ -70,7 +71,7 @@ if(!isset($errorName) && !isset($errorEmail) && !isset($errorPassword) && !isset
         if(!empty($valid)){
             echo"<p class='mt-2 text-xs text-rose-600 text-center'>$valid</p>"; } 
         if(!empty($errorValid)){
-        echo"<p class='mt-2 text-xs text-rose-600 text-center'>$errorValid</p>"; }  
+        echo"<p class='mt-2 text-xs text-rose-600 text-center'>$errorValid</p>";}  
       ?>
       <!-- <p class="mt-2 text-xs text-rose-600 text-center">Valid email address required for the account recovery process</p> -->
     </div>
